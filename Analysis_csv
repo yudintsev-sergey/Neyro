@@ -1,0 +1,43 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import math as ma
+
+
+wind = pd.read_csv('C:\data_grib\wdir.csv', delimiter=',')
+mean_col = np.mean(wind, axis=0)
+name_col_h = 'H1'          # + str(i + 1)
+name_col_wind = 'UGRD1'          #+ str(i + 1)
+name_col_vgrd = 'VGRD1'           #+ str(i + 1)
+h = np.array(wind['H1'])
+u = np.array(wind['UGRD1'])
+v = np.array(wind['VGRD1'])
+w = np.zeros
+dir = np.zeros
+w = u * u + v * v
+
+for i in range(15):
+    w[i] = ma.sqrt(w[i])
+
+dir = u / w
+# Строим график скорости ветра
+fig, ax = plt.subplots()
+ax.plot(h, w)
+
+ax.set(xlabel='Высота (м)', ylabel='Скорость ветра (м/с)',
+       title='Потому что мы пилоты')
+ax.grid()
+
+fig.savefig("test.png")
+plt.show()
+# Строим график направлений ветра
+fig, ax = plt.subplots()
+ax.plot(h, dir)
+
+ax.set(xlabel='Высота (м)', ylabel='Направление ветра (рад)',
+       title='Небо наш родимый дом')
+ax.grid()
+
+fig.savefig("test.png")
+plt.show()
+
